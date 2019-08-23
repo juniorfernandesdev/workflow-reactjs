@@ -1,8 +1,27 @@
-import todos from './index'
 import { expect } from 'chai'
 
+//deepFreeze serve para congelar o estado
+import deepFreeze from 'deep-freeze'
 
-//checar se o todo é uma funçãosssdfsdfsdf
+import todos from './index'
+import { ADD_TODO } from './actions'
+
+import TESTE from './actions'
+console.log(TESTE);
+
+
+//checar se o TODO é uma função
 it('should todos be a function', () => {
   expect(todos).to.be.a('function')
+})
+
+it('should add a todo item', () => {
+  const before = deepFreeze([])
+  const action = deepFreeze({
+    type: ADD_TODO,
+    payload: { id: 0,text: 'Hey' }
+  })
+
+  const after = [{ id: 0, text: 'Hey', completed: false }]
+  expect(todos(before, action)).to.be.deep.equal(after)
 })
