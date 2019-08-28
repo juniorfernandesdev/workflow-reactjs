@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import reducer from 'reducers/todos'
 import App from './app'
 
-
 const store = createStore(reducer)
 
 const renderApp = (NextApp) => {

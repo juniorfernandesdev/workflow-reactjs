@@ -1,30 +1,37 @@
 'use strict'
 
 import React from 'react'
-import { connect }  from 'react-redux'
-import { addTodo } from './redux-flow/reducers/todos/action-creators'
+import { connect } from 'react-redux'
+import { addTodo, toggleTodo } from './redux-flow/reducers/todos/action-creators'
+import todo from './redux-flow/reducers/todos';
 
-const App = ({ todos, handleAddTodo }) => (
+const App = ({ todos, handleAddTodo, handleToggleTodo }) => (
   <div>
     <form onSubmit={handleAddTodo}>
-      <input type='text' name='todo' />
+      <input type='text' name='todo' placeholder='Digite seu nome'/><br />
+      <input type='text' name='resumo' placeholder='Digite um resumo'/>
       <button type='submit'>Adicionar</button>
     </form>
-
-    {console.log(todos)}
-
     <ul>
-      <li style={{ textDecoration: 'line-through' }}>Item 1</li>
-      <li>Item 2</li>
-      <li>Item 3</li>
-      <li>Item 4</li>
-      <li>Item 5</li>
+      {todos.map((todo) => (
+        <li
+          key={todo.id}
+          style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+          onClick={handleToggleTodo(todo.id)}
+        >
+          { todo.text } -  
+          { todo.resumo }
+          
+        </li>
+        
+      ))}
+      { console.log(todos) }
     </ul>
     <h3>Mostrar</h3>
-    <div><span>Todos</span> | <a href="#">Finalizados</a> | <a href="#">A fazer</a></div>
+    <div><span>Todos</span>|<a href='#'>Finalizados</a>|<a href='#'>A fazer</a></div>
   </div>
+  
 )
-
 
 const mapStateToProps = (state) => ({
   todos: state
@@ -33,7 +40,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleAddTodo: (e) => {
     e.preventDefault()
-    dispatch(addTodo(e.target.todo.value))
+    dispatch(addTodo(e.target.todo.value, e.target.resumo.value))
+    e.target.todo.value = ''
+    e.target.resumo.value = ''
+  },
+  handleToggleTodo: (id) => (e) => {
+    dispatch(toggleTodo(id))
   }
 })
 
