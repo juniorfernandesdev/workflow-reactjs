@@ -2,7 +2,7 @@ import { ADD_TODO, TOGGLE_TODO } from './actions'
 
 export const initialState = []
 
-const todo = (state = initialState, action) => {
+const todos = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
       return state.concat({
@@ -25,4 +25,4 @@ const todo = (state = initialState, action) => {
   return state
 }
 
-export default todo
+export default todos
