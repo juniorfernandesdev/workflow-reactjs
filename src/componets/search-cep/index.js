@@ -1,7 +1,7 @@
 import React from 'react';
 
-const SeachCep = () => (
+const SeachCepp = () => (
     <div>CEP</div>
 )
 
-export default SeachCep
+export default SeachCepp
