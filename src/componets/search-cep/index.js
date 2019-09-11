@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
-import SeachCep from './search-cep'
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import SeachCep from './search-cep';
 import ajax from '@fdaciuk/ajax';
+import { updateAddress } from 'reducers/address/action-creators'
 
 
 class SeachCepContainer extends PureComponent {
@@ -17,15 +18,18 @@ class SeachCepContainer extends PureComponent {
 
         this.setState({ isFetching: false })
 
-        this.setState(response)
+        // this.setState(response)
+        this.props.dispatch(updateAddress(response))
     }
 
 
     render() {
+        console.log('this.props', this.props)
         return (
             <SeachCep 
-                {...this.state} 
-                handleSubmit={this.handleSubmit}
+                {...this.state}
+                {...this.props.address}
+            handleSubmit={this.handleSubmit}
             />
         )
     }

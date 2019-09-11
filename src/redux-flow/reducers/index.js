@@ -4,7 +4,7 @@ import reducerTodos from './todos'
 import reducerVisibilityFilter from './visibility-filter'
 
 export default combineReducers({
-    address: reducerAddress,
+    address,
     todos: reducerTodos,
     visibilityFilter: reducerVisibilityFilter
 })
