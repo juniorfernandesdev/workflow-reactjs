@@ -9,7 +9,7 @@ import App from './app'
 import reducer from 'reducers'
 
 
-//middleWare - reducer
+//middleWare - reducer - outro propriedade para trabalhar com redux de forma assincrona
 const logger = ({dispatch, getState}) => (next) => (action) => {
       console.log('LOGGER::will dispatch', action)
       const nextAction = next(action)
