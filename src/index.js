@@ -3,27 +3,36 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import App from './app'
-import reducer from 'reducers'
+import configureStore from './redux-flow/configure-store'
+
+const store = configureStore()
 
 
-//middleWare - reducer - outro propriedade para trabalhar com redux de forma assincrona
-const logger = ({dispatch, getState}) => (next) => (action) => {
-      console.log('LOGGER::will dispatch', action)
-      const nextAction = next(action)
-      console.log('LOGGER:next action', action)
-      return nextAction
-    }
-  
+// -------------------
+store.dispatch(lazyAction())
+function lazyAction () {
+  return (dispatch, getState) => {
+    setTimeout(() => {
+      dispatch({
+        type: 'todos:ADD_TODO',
+        payload: {
+          text: 'Lazy Action',
+          id: '123'
+        }
+      })
+    }, 2000)
+  }
+}
+// -------------------
 
-
-const store = createStore(reducer, applyMiddleware(logger))
-
-store.subscribe(() =>{
+const renderState = () => {
   console.log('state:', store.getState())
-})
+}
+
+store.subscribe(renderState)
+renderState()
 
 const renderApp = (NextApp) => {
   render(
